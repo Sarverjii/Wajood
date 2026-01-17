@@ -1,6 +1,5 @@
 backend/node_modules
-backend/package.json
-backend/package-lock.json
+gibackend/package-lock.json
 backend/.env
 
 
