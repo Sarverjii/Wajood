@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -47,7 +48,7 @@ const RegisterScreen = () => {
 
     try {
       const response = await axios.post(
-        'http://10.0.2.2:3000/api/auth/register',
+        `${Config.API_BASE_URL}/api/auth/register`,
         payload,
         {
           headers: {

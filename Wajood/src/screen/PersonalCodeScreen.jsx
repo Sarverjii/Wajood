@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useRoute } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const PersonalCodeScreen = () => {
   const route = useRoute();
@@ -38,7 +39,7 @@ const PersonalCodeScreen = () => {
       const token = await AsyncStorage.getItem('token');
 
       const response = await axios.post(
-        'http://10.0.2.2:3000/api/qr/personalcode',
+        `${Config.API_BASE_URL}/api/qr/personalcode`,
         {
           personalCode: enteredCode.trim(),
           shareContact,

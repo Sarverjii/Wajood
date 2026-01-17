@@ -76,8 +76,22 @@ const getShareApproveListService = async (userId) => {
   }));
 };
 
+const removeSavedContactService = async (userId, contactUserId) => {
+  const deletedConnection = await Connection.findOneAndDelete({
+    user_id: userId,
+    user_idContact: contactUserId,
+  });
+
+  if (!deletedConnection) {
+    throw new Error("No such connection exists");
+  }
+
+  return deletedConnection;
+};
+
 module.exports = {
   getContactListService,
   getSaveApproveListService,
   getShareApproveListService,
+  removeSavedContactService,
 };

@@ -2,6 +2,7 @@ const {
   getContactListService,
   getSaveApproveListService,
   getShareApproveListService,
+  removeSavedContactService,
 } = require("../services/contacts.service.js");
 
 const getContactList = async (req, res) => {
@@ -67,4 +68,37 @@ const getShareApproveList = async (req, res) => {
   }
 };
 
-module.exports = { getContactList, getSaveApproveList, getShareApproveList };
+const removeSavedContact = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { contactUserId } = req.body;
+
+    if (!contactUserId) {
+      return res.status(400).json({
+        success: false,
+        message: "Contact user ID is required",
+      });
+    }
+
+    await removeSavedContactService(userId, contactUserId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Contact deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting contact:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message || "Error deleting contact",
+    });
+  }
+};
+
+module.exports = {
+  getContactList,
+  getSaveApproveList,
+  getShareApproveList,
+  removeSavedContact,
+};

@@ -19,7 +19,7 @@ app.use("/api/qr", qrRoutes);
 app.use("/api/contacts", contactsRoutes);
 app.use("/api/approval/", approvalRoutes);
 
-app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, "0.0.0.0", () => {
   connectDB();
   console.log(`Wajood server running on port ${PORT}`);
 });

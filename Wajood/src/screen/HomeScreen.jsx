@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Config from 'react-native-config';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -25,10 +26,9 @@ const HomeScreen = () => {
         try {
           const token = await AsyncStorage.getItem('token');
 
-          const userRes = await axios.get('http://10.0.2.2:3000/api/user', {
+          const userRes = await axios.get(`${Config.API_BASE_URL}/api/user`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-
           const userData = userRes.data.data;
           setUser(userData);
 

@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const ApprovalScreen = () => {
   const navigation = useNavigation();
@@ -34,10 +35,10 @@ const ApprovalScreen = () => {
       const token = await AsyncStorage.getItem('token');
 
       const [shareRes, saveRes] = await Promise.all([
-        axios.get('http://10.0.2.2:3000/api/contacts/share-approve', {
+        axios.get(`${Config.API_BASE_URL}/api/contacts/share-approve`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get('http://10.0.2.2:3000/api/contacts/save-approve', {
+        axios.get(`${Config.API_BASE_URL}/api/contacts/save-approve`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
       ]);

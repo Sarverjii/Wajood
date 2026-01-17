@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { useFocusEffect } from '@react-navigation/native';
+import Config from 'react-native-config';
 
 const ContactScreen = () => {
   const [contacts, setContacts] = useState([]);
@@ -32,7 +33,7 @@ const ContactScreen = () => {
       const token = await AsyncStorage.getItem('token');
 
       const response = await axios.get(
-        'http://10.0.2.2:3000/api/contacts/saved',
+        `${Config.API_BASE_URL}/api/contacts/saved`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

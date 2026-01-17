@@ -12,6 +12,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 const SaveApprovalScreen = () => {
   const route = useRoute();
@@ -46,7 +47,7 @@ const SaveApprovalScreen = () => {
       const token = await AsyncStorage.getItem('token');
 
       await axios.post(
-        'http://10.0.2.2:3000/api/approval/save',
+        `${Config.API_BASE_URL}/api/approval/save`,
         {
           connectionId: approvalData.connectionId,
         },

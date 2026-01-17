@@ -17,6 +17,7 @@ import {
 } from '@react-navigation/native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Config from 'react-native-config';
 
 const requestCameraPermission = async () => {
   if (Platform.OS === 'android') {
@@ -66,7 +67,7 @@ const ScanScreen = () => {
       const token = await AsyncStorage.getItem('token');
 
       const response = await axios.post(
-        'http://10.0.2.2:3000/api/qr/scan',
+        `${Config.API_BASE_URL}/api/qr/scan`,
         { qrValue },
         {
           headers: {

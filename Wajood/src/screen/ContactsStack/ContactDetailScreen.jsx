@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import Config from 'react-native-config';
 
 const ContactDetailScreen = () => {
   const route = useRoute();
+  const navigation = useNavigation();
+
   const { contact, connection } = route.params || {};
+
+  const [loading, setLoading] = useState(false);
 
   if (!contact) {
     return (
@@ -20,6 +29,55 @@ const ContactDetailScreen = () => {
       </View>
     );
   }
+
+  const removeContact = () => {
+    Alert.alert(
+      'Remove Contact',
+      'Are you sure you want to remove this contact?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Remove',
+          style: 'destructive',
+          onPress: handleRemoveContact,
+        },
+      ],
+    );
+  };
+
+  const handleRemoveContact = async () => {
+    try {
+      setLoading(true);
+
+      const token = await AsyncStorage.getItem('token');
+
+      await axios.post(
+        `${Config.API_BASE_URL}/api/contacts/remove-saved`,
+        {
+          contactUserId: contact._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      Alert.alert('Success', 'Contact removed successfully', [
+        {
+          text: 'OK',
+          onPress: () => navigation.goBack(),
+        },
+      ]);
+    } catch (error) {
+      const message =
+        error.response?.data?.message || 'Failed to remove contact';
+
+      Alert.alert('Error', message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const {
     name,
@@ -76,12 +134,10 @@ const ContactDetailScreen = () => {
           <Text style={styles.sectionTitle}>Connection Details</Text>
 
           {renderRow('location-outline', connection.connectPlace || '—')}
-
           {renderRow(
             'calendar-outline',
             new Date(connection.connectDate).toDateString(),
           )}
-
           {renderRow('people-outline', connection.connectMode)}
         </View>
       )}
@@ -93,8 +149,16 @@ const ContactDetailScreen = () => {
           <Text style={styles.actionText}>Call</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.secondaryBtn}>
-          <Text style={styles.secondaryText}>Remove Contact</Text>
+        <TouchableOpacity
+          style={[styles.secondaryBtn, loading && { opacity: 0.6 }]}
+          onPress={removeContact}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={styles.secondaryText}>Remove Contact</Text>
+          )}
         </TouchableOpacity>
       </View>
     </ScrollView>

@@ -13,6 +13,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 const SaveContactScreen = () => {
   const route = useRoute();
@@ -62,7 +63,7 @@ const SaveContactScreen = () => {
       const token = await AsyncStorage.getItem('token');
 
       await axios.post(
-        'http://10.0.2.2:3000/api/qr/save',
+        `${Config.API_BASE_URL}/api/qr/save`,
         {
           contactUserId: _id,
           connectPlace: meetingPlace,

@@ -13,6 +13,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
+import Config from 'react-native-config';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -31,10 +32,13 @@ const LoginScreen = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://10.0.2.2:3000/api/auth/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${Config.API_BASE_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        },
+      );
       const { token, user, message, qrCode } = response.data;
       alert(message || 'Login successful');
 

@@ -6,10 +6,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import AuthStack from './src/navigation/AuthStack';
 import AppStack from './src/navigation/AppStack';
 import { AuthProvider, AuthContext } from './src/context/AuthContext';
+import Config from 'react-native-config';
 
 const AppContent = () => {
+  console.log(`${Config.API_BASE_URL}`);
   const { isAuthenticated } = React.useContext(AuthContext);
-
   if (isAuthenticated === null) {
     return (
       <View style={styles.loader}>
