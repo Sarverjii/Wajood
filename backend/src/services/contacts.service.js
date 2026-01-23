@@ -33,6 +33,7 @@ const getSaveApproveListService = async (userId) => {
   const connections = await Connection.find({
     user_id: userId,
     saveApproved: false,
+    shareApproved: true,
   })
     .populate({
       path: "user_idContact",

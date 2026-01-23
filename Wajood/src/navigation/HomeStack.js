@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from '../screen/HomeScreen';
 import PersonalCodeScreen from '../screen/PersonalCodeScreen';
+import MeetingStackNavigator from './MeetingStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,13 @@ const HomeStackNavigator = () => {
         options={{
           title: 'Personal Code',
         }}
+      />
+
+      {/* 👇 MEETING STACK */}
+      <Stack.Screen
+        name="Meeting"
+        component={MeetingStackNavigator}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

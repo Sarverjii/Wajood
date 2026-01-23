@@ -80,7 +80,10 @@ const SaveContactScreen = () => {
         {
           text: 'OK',
           onPress: () => {
-            navigation.navigate('Contact'); // ✅ go to Contact tab
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Contact' }],
+            });
           },
         },
       ]);

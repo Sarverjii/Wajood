@@ -8,8 +8,11 @@ import AppStack from './src/navigation/AppStack';
 import { AuthProvider, AuthContext } from './src/context/AuthContext';
 import Config from 'react-native-config';
 
+import Toast from 'react-native-toast-message';
+
 const AppContent = () => {
-  console.log(`${Config.API_BASE_URL}`);
+  console.log(`${Config.API_BASE_URL}/api/contacts/saved`);
+
   const { isAuthenticated } = React.useContext(AuthContext);
   if (isAuthenticated === null) {
     return (
@@ -28,6 +31,7 @@ const App = () => {
       <AuthProvider>
         <NavigationContainer>
           <AppContent />
+          <Toast />
         </NavigationContainer>
       </AuthProvider>
     </SafeAreaView>

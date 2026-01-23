@@ -32,6 +32,10 @@ const LoginScreen = () => {
     setLoading(true);
 
     try {
+      console.log(
+        'Sending POST API Request on : ' +
+          `${Config.API_BASE_URL}/api/auth/login`,
+      );
       const response = await axios.post(
         `${Config.API_BASE_URL}/api/auth/login`,
         {

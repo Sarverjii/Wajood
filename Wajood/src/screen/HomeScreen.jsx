@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Pressable,
+  ScrollView,
 } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,7 +46,7 @@ const HomeScreen = () => {
   );
 
   return (
-    <View style={styles.root}>
+    <ScrollView style={styles.root}>
       {/* ===== SCAN SECTION ===== */}
       <Text style={styles.sectionTitle}>SCAN</Text>
 
@@ -114,11 +115,14 @@ const HomeScreen = () => {
         <Text style={styles.primaryButtonText}>Personal Code</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.secondaryButton}>
+      <TouchableOpacity
+        style={styles.secondaryButton}
+        onPress={() => navigation.navigate('Meeting')}
+      >
         <Icon name="people-outline" size={18} color="#FFF" />
         <Text style={styles.secondaryButtonText}>Meeting ID</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -251,12 +255,13 @@ const styles = StyleSheet.create({
   },
 
   secondaryButton: {
-    backgroundColor: '#F6B27A',
+    backgroundColor: '#fc9643',
     paddingVertical: 14,
     borderRadius: 14,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 50,
   },
 
   secondaryButtonText: {
